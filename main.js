@@ -34,51 +34,61 @@ fetch('https://raw.githubusercontent.com/KoreanThinker/billboard-json/main/billb
     });
 
 
-    //search
-   // Function to fetch lyrics data for a song
-async function fetchLyrics(artist, title) {
-    try {
-        // Encode artist and title for the URL
-        const artistParam = encodeURIComponent(artist);
-        const titleParam = encodeURIComponent(title);
+    // Replace 'YOUR_CLIENT_ACCESS_TOKEN' with your actual Genius API Client Access Token
+ const accessToken = 'x2V-WCCJaPbZ6kICkVNhl3alPkM-Y3_HPB4MrGc18Lv4ze5pdo3RcjBJfDf69zp-';
 
-        // Construct the API URL
-        const apiUrl = `https://api.lyrics.ovh/v1/${artistParam}/${titleParam}`;
+ // Function to fetch lyrics for a song
+ async function fetchLyrics(songTitle, artistName) {
+     try {
+         // Encode the song title and artist name for the URL
+         const titleParam = encodeURIComponent(songTitle);
+         const artistParam = encodeURIComponent(artistName);
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
+         // Construct the API URL
+         const apiUrl = `https://api.genius.com/search?q=${titleParam} ${artistParam}`;
 
-        // Check if the data contains lyrics
-        if (data.lyrics) {
-            return data.lyrics;
-        } else {
-            return "Lyrics not found.";
-        }
-    } catch (error) {
-        console.error(error);
-        return "An error occurred while fetching lyrics.";
-    }
-}
+         // Make a request to Genius API with the Client Access Token in the headers
+         const response = await fetch(apiUrl, {
+             headers: {
+                 'Authorization': `Bearer ${accessToken}`
+             }
+         });
 
-// Function to display lyrics in the HTML
-function displayLyrics(lyrics) {
-    const lyricsContent = document.getElementById('lyrics-content');
-    lyricsContent.textContent = lyrics;
-}
+         const data = await response.json();
 
-// Add a click event listener to the "Search" button
-document.querySelector('.search-button').addEventListener('click', function() {
-    const searchQuery = document.querySelector('.search-input').value;
+         // Extract the lyrics URL from the API response
+         const lyricsUrl = data.response.hits[0].result.url;
 
-    // Split the search query into artist and title
-    const [artist, title] = searchQuery.split('-'); // For example, "Adele-Hello"
+         // Fetch the lyrics page
+         const lyricsResponse = await fetch(lyricsUrl);
+         const lyricsPageContent = await lyricsResponse.text();
 
-    // Fetch and display lyrics
-    fetchLyrics(artist, title)
-        .then(lyrics => {
-            displayLyrics(lyrics);
-        })
-        .catch(error => {
-            displayLyrics(error);
-        });
-});
+         // Function to parse and display lyrics from the Genius page content
+         function displayLyricsFromPage(lyricsPageContent) {
+             const lyrics = lyricsPageContent.match(/<div class="lyrics">([\s\S]*?)<\/div>/);
+
+             if (lyrics) {
+                 const lyricsContent = document.getElementById('lyrics-content');
+                 lyricsContent.innerHTML = lyrics[1];
+             } else {
+                 lyricsContent.innerHTML = 'Lyrics not found on Genius.';
+             }
+         }
+
+         displayLyricsFromPage(lyricsPageContent);
+
+     } catch (error) {
+         console.error(error);
+     }
+ }
+
+ // Add a click event listener to the "Search" button
+ document.querySelector('.search-button').addEventListener('click', function() {
+     const searchQuery = document.querySelector('.search-input').value;
+
+     // Split the search query into song title and artist name
+     const [songTitle, artistName] = searchQuery.split('-');
+
+     // Fetch and display lyrics
+     fetchLyrics(songTitle, artistName.trim());
+ });
