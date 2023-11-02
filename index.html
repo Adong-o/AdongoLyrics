@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adongo: Home of lyrics</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="https://i.postimg.cc/520cMSck/Adongologo.png">
+</head>
+<body>
+    
+    <div class="navbar">
+        <div class="logo">
+            <img src="https://i.postimg.cc/520cMSck/Adongologo.png" alt="Logo">
+        </div>
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">Search</button>
+        </div>
+    </div>
+
+<!--lyrics-->
+
+    <section id="lyrics-section">
+        <h2>Lyrics</h2>
+        <div class="lyrics-container">
+            <p id="lyrics-content"></p>
+        </div>
+    </section>
+
+    <!--The hot songs-->
+
+    <section id="hot-songs">
+        <h2>Hot Songs</h2>
+        <div class="table-container">
+            <table class="song-table" id="table-1">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                    </tr>
+                </thead>
+                <tbody id="table-1-body"></tbody>
+            </table>
+            <table class="song-table" id="table-2">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                    </tr>
+                </thead>
+                <tbody id="table-2-body"></tbody>
+            </table>
+        </div>
+    </section>
+
+
+
+
+    <script src="main.js"></script>
+</body>
+</html>

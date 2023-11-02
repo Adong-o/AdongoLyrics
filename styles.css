@@ -1,0 +1,95 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333; 
+    padding: 10px 20px; 
+}
+
+.logo img {
+    max-height: 70px; 
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #555; 
+    border-radius: 5px; 
+}
+
+.search-button {
+    background-color: #555; 
+    color: #fff; 
+    padding: 10px 10px; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column; 
+        padding: 10px; 
+    }
+
+    .search-bar {
+        margin-top: 10px; 
+    }
+}
+
+/*hot songs*/
+#hot-songs {
+    text-align: center;
+    padding: 20px;
+}
+
+.table-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto;
+}
+
+.song-table {
+    width: 45%; /* Adjust the width as needed */
+    margin: 10px 0;
+}
+
+.song-table th {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.song-table th, .song-table td {
+    padding: 8px 12px;
+    text-align: left;
+}
+
+.song-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.song-table tr:hover {
+    background-color: #ddd;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .table-container {
+        flex-direction: column;
+    }
+
+    .song-table {
+        width: 100%;
+    }
+}
